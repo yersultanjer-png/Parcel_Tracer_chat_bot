@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Parcel Support Chatbot</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <div class="page">
+        <section class="hero">
+            <h1>Parcel Support Chatbot</h1>
+            <p>
+                A web chatbot built with Flask and SQLite. It helps users track parcels,
+                check delivery prices, see delivery times, and view chat history.
+            </p>
+        </section>
+
+        <main class="layout">
+            <section class="chat-card">
+                <div class="card-top">
+                    <h2>Chat Window</h2>
+                    <span class="tag">Flask + SQLite</span>
+                </div>
+
+                {% if notice %}
+                    <div class="notice">{{ notice }}</div>
+                {% endif %}
+
+                <div class="chat-box">
+                    {% if history %}
+                        {% for sender, message in history %}
+                            <div class="bubble {{ sender }}">
+                                <div class="bubble-label">{{ 'User' if sender == 'user' else 'Bot' }}</div>
+                                <div class="bubble-text">{{ message }}</div>
+                            </div>
+                        {% endfor %}
+                    {% else %}
+                        <div class="empty-state">The chat history is empty. Send a message to start a conversation.</div>
+                    {% endif %}
+                </div>
+
+                <form method="POST" class="chat-form">
+                    <input type="text" name="message" placeholder="Example: help or track KZT12345678" autocomplete="off">
+                    <button type="submit">Send</button>
+                </form>
+
+                <form method="POST" class="clear-form">
+                    <button type="submit" name="clear_history" value="1" class="danger-btn">Clear History</button>
+                </form>
+            </section>
+
+            <aside class="info-card">
+                <h2>Typical Requests</h2>
+                <ul>
+                    <li>hello</li>
+                    <li>help</li>
+                    <li>cities</li>
+                    <li>prices</li>
+                    <li>delivery time</li>
+                    <li>faq</li>
+                    <li>contacts</li>
+                    <li>all parcels</li>
+                    <li>track KZT12345678</li>
+                    <li>status KZT87654321</li>
+                    <li>price standard</li>
+                    <li>price express</li>
+                    <li>time standard</li>
+                    <li>city Almaty</li>
+                </ul>
+
+                <h2>Error Handling</h2>
+                <ul>
+                    <li>Empty input</li>
+                    <li>Unknown command</li>
+                    <li>Invalid tracking number</li>
+                    <li>Missing parcel data</li>
+                </ul>
+            </aside>
+        </main>
+    </div>
+</body>
+</html>
